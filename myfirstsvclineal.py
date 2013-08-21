@@ -7,7 +7,8 @@ please see packages.python.org/milk/randomforests.html for more
 
 import numpy as np
 import csv as csv
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn import cross_validation
+from sklearn import svm
 
 csv_file_object = csv.reader(open('Data/train.csv', 'rb')) #Load in the training csv file
 header = csv_file_object.next() #Skip the fist line as it is a header
@@ -76,15 +77,13 @@ test_data = np.delete(test_data,[1,6,8],1) #remove the name data, cabin and tick
 #The data is now ready to go. So lets train then test!
 
 print 'Training '
-clf = GradientBoostingClassifier(n_estimators=100, max_depth=10, min_samples_split=1,
-          learning_rate=0.01).fit(train_data[0::,1::],
-                    train_data[0::,0])
+clf = svm.SVC(kernel='linear', C=1)
 print 'Scoring'
-accuracy=clf.score(train_data[0::,1::],train_data[0::,0])
-print accuracy
+scores = cross_validation.cross_val_score(clf, train_data[0::,1::],train_data[0::,0], cv=5)
+print scores
 print 'Predicting'
 output = clf.predict(test_data)
 
-open_file_object = csv.writer(open("myfirstgbrt.csv", "wb"))
+open_file_object = csv.writer(open("myfirstsvclineal.csv", "wb"))
 open_file_object.writerow(["PassengerId","Survived"])
 open_file_object.writerows(zip(ids, output))
