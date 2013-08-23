@@ -110,7 +110,7 @@ param_dist = {"linearsvc__C": sp_randint(1, 1000),
               }
 
 # run randomized search
-n_iter_search = 20000000
+n_iter_search = 2000000
 random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
                                    n_iter=n_iter_search)
 random_search.fit(train_data[0::,1::],train_data[0::,0])
