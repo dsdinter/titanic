@@ -7,6 +7,7 @@ please see packages.python.org/milk/randomforests.html for more
 
 import numpy as np
 import csv as csv
+from sklearn.cross_validation import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 
 csv_file_object = csv.reader(open('Data/train.csv', 'rb')) #Load in the training csv file
@@ -80,7 +81,10 @@ forest = RandomForestClassifier(n_estimators=100)
 
 forest = forest.fit(train_data[0::,1::],\
                     train_data[0::,0])
-
+cross_val=cross_val_score(forest,train_data[0::,1::],train_data[0::,0],cv=10)                    
+print 'Cross Validation'
+print cross_val
+print("Accuracy: %0.2f (+/- %0.2f)" % (cross_val.mean(), cross_val.std() * 2))
 print 'Predicting'
 output = forest.predict(test_data)
 
