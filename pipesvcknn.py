@@ -179,7 +179,7 @@ output = random_search.predict(test_data_std)
 
 #Finally with data without age
 # run randomized search
-n_iter_search = 2000
+n_iter_search = 20
 random_search = RandomizedSearchCV(clf, param_distributions=param_dist,
                                    n_iter=n_iter_search,n_jobs=4, verbose=1)
 random_search.fit(x_train_std_noage,y_train_noage)
